@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VELOCITY - The Ultimate Beam Hub Experience</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .welcome-badge {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 12px 30px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .welcome-badge::before {
+            content: "⚔️ ";
+            margin-right: 8px;
+        }
+
+        .main-title {
+            font-size: clamp(4rem, 12vw, 8rem);
+            font-weight: 900;
+            letter-spacing: 8px;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #fff, #ccc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out 0.3s both;
+            text-shadow: 
+                0 0 15px rgba(255, 255, 255, 0.6),
+                0 0 30px rgba(255, 255, 255, 0.4),
+                0 0 45px rgba(255, 255, 255, 0.2);
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            font-family: Arial Black, Arial, sans-serif;
+            -webkit-text-stroke: 2px transparent;
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typewriter 2s steps(8) 0.5s both;
+        }
+
+        @keyframes typewriter {
+            0% {
+                width: 0;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        .subtitle {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            font-weight: 300;
+            margin-bottom: 40px;
+            color: #ccc;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .description {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            line-height: 1.8;
+            max-width: 600px;
+            margin-bottom: 60px;
+            color: #999;
+            font-weight: 300;
+            animation: fadeInUp 1s ease-out 0.9s both;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 400px;
+            animation: fadeInUp 1s ease-out 1.2s both;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 1);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float linear infinite;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.9), 0 0 60px rgba(255, 255, 255, 0.6), 0 0 90px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Floating dots with glow */
+        .floating-dot {
+            position: absolute;
+            background: rgba(255, 255, 255, 1);
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 1), 0 0 60px rgba(255, 255, 255, 0.8), 0 0 90px rgba(255, 255, 255, 0.5), 0 0 120px rgba(255, 255, 255, 0.3);
+            animation: floatAround linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatAround {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(200px, -100px) rotate(90deg);
+            }
+            50% {
+                transform: translate(0, -200px) rotate(180deg);
+            }
+            75% {
+                transform: translate(-200px, -100px) rotate(270deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="welcome-badge">WELCOME</div>
+        
+        <h1 class="main-title">VELOCITY</h1>
+        
+        <h2 class="subtitle">The Ultimate Beam Hub Experience</h2>
+        
+        <p class="description">
+            Lightning-fast generators, military-grade security, and unmatched reliability. Built by professionals, for professionals who demand the absolute best.
+        </p>
+        
+        <div class="buttons">
+            <a href="https://discord.gg/JXzQ5ZPSA6" class="btn discord-btn" target="_blank" rel="noopener noreferrer">⚔️ Join Discord →</a>
+            <button class="btn tutorial-btn">⚔️ Watch Tutorial →</button>
+            <a href="https://spoo.me/velocityy" class="btn tutorial-btn" target="_blank" rel="noopener noreferrer">⚔️ Link Generator →</a>
+        </div>
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            // Random size between 4px and 20px
+            const size = Math.random() * 16 + 4;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            
+            // Random horizontal position
+            particle.style.left = Math.random() * 100 + '%';
+            
+            // Random animation duration between 8 and 15 seconds
+            const duration = Math.random() * 7 + 8;
+            particle.style.animationDuration = duration + 's';
+            
+            // Random opacity
+            particle.style.opacity = Math.random() * 0.6 + 0.2;
+            
+            // Random horizontal drift
+            const drift = (Math.random() - 0.5) * 200;
+            particle.style.setProperty('--drift', drift + 'px');
+            
+            document.body.appendChild(particle);
+            
+            // Remove particle after animation
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.parentNode.removeChild(particle);
+                }
+            }, duration * 1000);
+        }
+
+        // Create floating dots with glow
+        function createFloatingDot() {
+            const dot = document.createElement('div');
+            dot.className = 'floating-dot';
+            
+            // Random size between 3px and 12px
+            const size = Math.random() * 9 + 3;
+            dot.style.width = size + 'px';
+            dot.style.height = size + 'px';
+            
+            // Random starting position
+            dot.style.left = Math.random() * 100 + '%';
+            dot.style.top = Math.random() * 100 + '%';
+            
+            // Random animation duration between 3 and 8 seconds
+            const duration = Math.random() * 5 + 3;
+            dot.style.animationDuration = duration + 's';
+            
+            // Random delay
+            dot.style.animationDelay = Math.random() * 5 + 's';
+            
+            // Random opacity
+            dot.style.opacity = Math.random() * 0.4 + 0.6;
+            
+            // Random scale for the animation path
+            const scale = Math.random() * 0.5 + 0.5;
+            dot.style.setProperty('--scale', scale);
+            
+            document.body.appendChild(dot);
+            
+            // Replace with new dot when this one completes
+            setTimeout(() => {
+                if (dot.parentNode) {
+                    dot.parentNode.removeChild(dot);
+                }
+                createFloatingDot();
+            }, duration * 1000 + parseFloat(dot.style.animationDelay.replace('s', '')) * 1000);
+        }
+
+        // Create particles at intervals
+        function startParticleSystem() {
+            createParticle();
+            setTimeout(startParticleSystem, Math.random() * 800 + 200);
+        }
+
+        // Start the particle system
+        startParticleSystem();
+
+        // Add initial particles
+        for (let i = 0; i < 15; i++) {
+            setTimeout(createParticle, i * 200);
+        }
+
+        // Create continuous floating dots
+        for (let i = 0; i < 150; i++) {
+            setTimeout(createFloatingDot, i * 20);
+        }
+
+        // Add hover effects to buttons
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                btn.style.transform = 'translateY(-3px) scale(1.02)';
+            });
+            
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add click ripple effect
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    background: rgba(255, 255, 255, 0.3);
+                    border-radius: 50%;
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    pointer-events: none;
+                `;
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+    </script>
+</body>
+</html>
